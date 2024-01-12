@@ -22,8 +22,8 @@ class Connection {
   State state() const;
   Socket *socket() const;
   void set_send_buf(const char *str);
-  //Buffer *read_buf();
-  //Buffer *send_buf();
+  Buffer *read_buf();
+  Buffer *send_buf();
 
   RS Read();
   RS Write();

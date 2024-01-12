@@ -11,5 +11,5 @@ enum RS //Run State
 {
     RS_DEFEAT,
     RS_SUCCES,
-    RC_UNDEFINED
+    RS_UNDEFINED
 };
