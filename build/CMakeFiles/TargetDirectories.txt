@@ -1,0 +1,3 @@
+/home/mio/桌面/my-websever/build/CMakeFiles/my_webserver.dir
+/home/mio/桌面/my-websever/build/CMakeFiles/edit_cache.dir
+/home/mio/桌面/my-websever/build/CMakeFiles/rebuild_cache.dir

@@ -1,6 +1,10 @@
 #include "Channel.h"
 #include "EventLoop.h"
 
+const short Channel::READ_EVENT = 1;
+const short Channel::WRITE_EVENT = 2;
+const short Channel::ET = 4;
+
 Channel::Channel(int fd, EventLoop *loop):fd_(fd),loop_(loop),listen_events_(0),ready_events_(0),exist_(false)
 {
 }
@@ -12,10 +16,10 @@ Channel::~Channel()
 
 void Channel::HandleEvent() const
 {
-    if(ready_events && READ_EVENT){
+    if(ready_events_ && READ_EVENT){
         read_callback_();
     }
-    else if(ready_events && WRITE_EVENT){
+    else if(ready_events_ && WRITE_EVENT){
         write_callback_();
     }
 }

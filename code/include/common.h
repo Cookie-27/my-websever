@@ -1,3 +1,5 @@
+#pragma once
+
 class Channel;
 class EventLoop;
 class Poller;

@@ -1,0 +1,52 @@
+[
+{
+  "directory": "/home/mio/桌面/my-websever/build",
+  "command": "/usr/bin/g++  -I/home/mio/桌面/my-websever/code/include -g -o CMakeFiles/my_webserver.dir/code/Acceptor.cpp.o -c /home/mio/桌面/my-websever/code/Acceptor.cpp",
+  "file": "/home/mio/桌面/my-websever/code/Acceptor.cpp"
+},
+{
+  "directory": "/home/mio/桌面/my-websever/build",
+  "command": "/usr/bin/g++  -I/home/mio/桌面/my-websever/code/include -g -o CMakeFiles/my_webserver.dir/code/Buffer.cpp.o -c /home/mio/桌面/my-websever/code/Buffer.cpp",
+  "file": "/home/mio/桌面/my-websever/code/Buffer.cpp"
+},
+{
+  "directory": "/home/mio/桌面/my-websever/build",
+  "command": "/usr/bin/g++  -I/home/mio/桌面/my-websever/code/include -g -o CMakeFiles/my_webserver.dir/code/Channel.cpp.o -c /home/mio/桌面/my-websever/code/Channel.cpp",
+  "file": "/home/mio/桌面/my-websever/code/Channel.cpp"
+},
+{
+  "directory": "/home/mio/桌面/my-websever/build",
+  "command": "/usr/bin/g++  -I/home/mio/桌面/my-websever/code/include -g -o CMakeFiles/my_webserver.dir/code/Connection.cpp.o -c /home/mio/桌面/my-websever/code/Connection.cpp",
+  "file": "/home/mio/桌面/my-websever/code/Connection.cpp"
+},
+{
+  "directory": "/home/mio/桌面/my-websever/build",
+  "command": "/usr/bin/g++  -I/home/mio/桌面/my-websever/code/include -g -o CMakeFiles/my_webserver.dir/code/EventLoop.cpp.o -c /home/mio/桌面/my-websever/code/EventLoop.cpp",
+  "file": "/home/mio/桌面/my-websever/code/EventLoop.cpp"
+},
+{
+  "directory": "/home/mio/桌面/my-websever/build",
+  "command": "/usr/bin/g++  -I/home/mio/桌面/my-websever/code/include -g -o CMakeFiles/my_webserver.dir/code/Poller.cpp.o -c /home/mio/桌面/my-websever/code/Poller.cpp",
+  "file": "/home/mio/桌面/my-websever/code/Poller.cpp"
+},
+{
+  "directory": "/home/mio/桌面/my-websever/build",
+  "command": "/usr/bin/g++  -I/home/mio/桌面/my-websever/code/include -g -o CMakeFiles/my_webserver.dir/code/Server.cpp.o -c /home/mio/桌面/my-websever/code/Server.cpp",
+  "file": "/home/mio/桌面/my-websever/code/Server.cpp"
+},
+{
+  "directory": "/home/mio/桌面/my-websever/build",
+  "command": "/usr/bin/g++  -I/home/mio/桌面/my-websever/code/include -g -o CMakeFiles/my_webserver.dir/code/Socket.cpp.o -c /home/mio/桌面/my-websever/code/Socket.cpp",
+  "file": "/home/mio/桌面/my-websever/code/Socket.cpp"
+},
+{
+  "directory": "/home/mio/桌面/my-websever/build",
+  "command": "/usr/bin/g++  -I/home/mio/桌面/my-websever/code/include -g -o CMakeFiles/my_webserver.dir/code/Test.cpp.o -c /home/mio/桌面/my-websever/code/Test.cpp",
+  "file": "/home/mio/桌面/my-websever/code/Test.cpp"
+},
+{
+  "directory": "/home/mio/桌面/my-websever/build",
+  "command": "/usr/bin/g++  -I/home/mio/桌面/my-websever/code/include -g -o CMakeFiles/my_webserver.dir/code/ThreadPool.cpp.o -c /home/mio/桌面/my-websever/code/ThreadPool.cpp",
+  "file": "/home/mio/桌面/my-websever/code/ThreadPool.cpp"
+}
+]

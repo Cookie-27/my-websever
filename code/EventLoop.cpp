@@ -6,10 +6,7 @@ EventLoop::EventLoop()
 {
     poller_ = std::make_unique<Poller>();
 }
-EventLoop::~EventLoop()
-{
-
-}
+EventLoop::~EventLoop() {}
 
 void EventLoop::Loop() const
 {

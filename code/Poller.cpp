@@ -52,7 +52,7 @@ RS Poller::DeleteChannel(Channel *ch) const
     ch->set_exist(false);
 }
 
-std::vector<Channel *> Poller::Poll(long timeout = -1) const
+std::vector<Channel *> Poller::Poll(long timeout) const
 {
     std::vector<Channel *> active_channels;
     int nfds = epoll_wait(fd_, events_, MAX_EVENTS, timeout);
