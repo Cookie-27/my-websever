@@ -7,8 +7,9 @@ class ThreadPool;
 class Buffer;
 class Connection;
 
-enum RS
+enum RS //Run State
 {
     RS_DEFEAT,
-    RS_SUCCES
+    RS_SUCCES,
+    RC_UNDEFINED
 };
