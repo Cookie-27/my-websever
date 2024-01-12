@@ -5,6 +5,7 @@
 #include "Channel.h"
 #include "Socket.h"
 #include <cassert>
+#include <iostream>
 
 Acceptor::Acceptor(EventLoop *loop) {
   socket_ = std::make_unique<Socket>();
@@ -27,6 +28,7 @@ RS Acceptor::AcceptConnection() const{
     //return RC_ACCEPTOR_ERROR;
   }
   // TODO: remove
+  std::cout<<"new connection\n";
   fcntl(clnt_fd, F_SETFL, fcntl(clnt_fd, F_GETFL) | O_NONBLOCK);  // 新接受到的连接设置为非阻塞式
   if (new_connection_callback_) {
     new_connection_callback_(clnt_fd);
