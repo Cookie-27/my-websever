@@ -1,0 +1,34 @@
+#include "Buffer.h"
+
+const std::string &Buffer::buf() const
+{
+    return this->buffer_;
+}
+
+const char* Buffer::c_str() const
+{
+    return this->buffer_.c_str();
+}
+    
+void Buffer::set_buf(const char *buf)
+{
+    std::string new_buffer(buf);
+    this->buffer_ = new_buffer;
+}
+
+size_t Buffer::Size() const
+{
+    return buffer_.size();
+}
+
+void Buffer::Append(const char *_str, int _size)
+{
+    if (_str != nullptr && _size >= 0) {
+        buffer_.append(_str, static_cast<size_t>(_size));
+    }
+}
+
+void Buffer::Clear()
+{
+    buffer_.clear();
+}
