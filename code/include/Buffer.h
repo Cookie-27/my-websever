@@ -19,9 +19,12 @@ public:
     size_t Size() const;
     void Append(const char *_str, int _size);
     void Clear();
+    const char* findCRLF() const;
+    void retrieveUntil(const char* end);
 
-    
 private:
-    std::string buffer_;    
+    std::string buffer_; 
+    static const char CRLF[2];   
+    
 };
 

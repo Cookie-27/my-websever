@@ -27,7 +27,7 @@ class Connection {
 
   RS Read();
   RS Write();
-  RS Send(std::string msg);
+  RS Send(HttpRequest*);
 
   void Close();
 
@@ -51,4 +51,6 @@ class Connection {
 
   std::function<void(int)> delete_connectioin_;
   std::function<void(Connection *)> on_recv_;
+
+  std::unique_ptr<HttpContext> httpcontext_;
 };

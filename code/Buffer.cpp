@@ -1,4 +1,8 @@
 #include "Buffer.h"
+#include <algorithm>
+#include <cstring>
+
+const char Buffer::CRLF[2] = {'\r', '\n'};
 
 const std::string &Buffer::buf() const
 {
@@ -31,4 +35,15 @@ void Buffer::Append(const char *_str, int _size)
 void Buffer::Clear()
 {
     buffer_.clear();
+}
+
+const char* Buffer::findCRLF() const
+{
+    const char* crlf = std::strstr(buffer_.c_str(), CRLF);
+    return crlf;
+}
+
+void Buffer::retrieveUntil(const char* end)
+{
+    buffer_.erase(buffer_.begin(), buffer_.begin() + (end - buffer_.c_str()));
 }

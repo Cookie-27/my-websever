@@ -4,6 +4,8 @@
 #include "Channel.h"
 #include "Socket.h"
 #include <cstring>
+#include "HttpContext.h"
+#include "HttpRequset.h"
 
 Connection::Connection(int fd, EventLoop *loop) {
   socket_ = std::make_unique<Socket>();
@@ -15,7 +17,7 @@ Connection::Connection(int fd, EventLoop *loop) {
   }
   read_buf_ = std::make_unique<Buffer>();
   send_buf_ = std::make_unique<Buffer>();
-
+  httpcontext_ = std::make_unique<HttpContext>();
   state_ = State::Connected;
 }
 
@@ -62,6 +64,8 @@ RS Connection::ReadNonBlocking() {
       continue;
     } else if (bytes_read == -1 &&
                ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完毕
+      httpcontext_->parseRequest(read_buf_.get());  
+      
       break;
     } else if (bytes_read == 0) {  // EOF，客户端断开连接
       printf("read EOF, client fd %d disconnected\n", sockfd);
@@ -134,9 +138,9 @@ RS Connection::WriteBlocking() {
   return RS::RS_SUCCES;
 }
 
-RS Connection::Send(std::string msg) {
-  set_send_buf(msg.c_str());
-  Write();
+RS Connection::Send(HttpRequest *request) {
+  //set_send_buf(msg.c_str());
+  //Write();
   return RS::RS_SUCCES;
 }
 

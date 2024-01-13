@@ -8,6 +8,9 @@ class Acceptor;
 class ThreadPool;
 class Buffer;
 class Connection;
+class HttpContext;
+class HttpRequest;
+
 
 enum RS //Run State
 {
