@@ -60,6 +60,7 @@ RS Connection::ReadNonBlocking() {
   while (true) {   // 使用非阻塞IO，读取客户端buffer，一次读取buf大小数据，直到全部读取完毕
   //std::cout<<"zhe li mei wen ti\n"<<std::endl;
     memset(buf, 0, sizeof(buf));
+    std::cout<<buf<<std::endl;
     ssize_t bytes_read = read(sockfd, buf, sizeof(buf));
     if (bytes_read > 0) {
       read_buf_->Append(buf, bytes_read);
@@ -69,10 +70,17 @@ RS Connection::ReadNonBlocking() {
     } else if (bytes_read == -1 &&
                ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完毕
                
-      // std::cout<<"zhe li mei wen ti\n"<<std::endl;
-      //std::cout<<read_buf_->c_str()<<std::endl;
-      //httpcontext_->parseRequest(read_buf_.get());
-
+      //std::cout<<"zhe li mei wen ti\n"<<std::endl;
+      std::cout<<read_buf_->c_str()<<std::endl;
+      if(httpcontext_->parseRequest(read_buf_.get())){
+          std::cout<<"ok\n";
+          HttpRequest req = httpcontext_->request();
+          std::cout<<req.path();
+          /*std::map<std::string, std::string> headers = req.headers();
+          for (const auto& entry : headers) {
+            std::cout << "Key: " << entry.first << ", Value: " << entry.second << std::endl;
+          }*/
+      }
       break;
     } else if (bytes_read == 0) {  // EOF，客户端断开连接
       printf("read EOF, client fd %d disconnected\n", sockfd);

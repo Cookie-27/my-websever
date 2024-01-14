@@ -1,9 +1,17 @@
 #include "HttpContext.h"
 #include <algorithm>
 #include <Buffer.h>
-
+#include <iostream>
 bool HttpContext::processRequestLine(const char* begin, const char* end)
 {
+  const char *p = begin;
+  while(p!=end){
+    std::cout<<*p;
+    p++;
+  }
+  std::cout<<std::endl;
+
+  
   bool succeed = false;
   const char* start = begin;
   const char* space = std::find(start, end, ' ');
