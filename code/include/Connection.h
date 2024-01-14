@@ -19,6 +19,7 @@ class Connection {
   void set_delete_connection(std::function<void(int)> const &fn);
   void set_on_connect(std::function<void(Connection *)> const &fn);
   void set_on_recv(std::function<void(Connection *)> const &fn);
+  void set_on_req(std::function<void(Connection *)> const &fn);
   State state() const;
   Socket *socket() const;
   void set_send_buf(const char *str);
@@ -52,6 +53,6 @@ class Connection {
 
   std::function<void(int)> delete_connectioin_;
   std::function<void(Connection *)> on_recv_;
-
+  std::function<void(Connection *)> on_req_;
   HttpContext* httpcontext_;
 };

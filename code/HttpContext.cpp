@@ -17,14 +17,16 @@ bool HttpContext::processRequestLine(const char* begin, const char* end)
   const char* space = std::find(start, end, ' ');
   if (space != end && request_.setMethod(start, space))
   {
+    
     start = space+1;
     space = std::find(start, end, ' ');
     if (space != end)
     {
+      //std::cout<<"jin ru le zhe li";
       const char* question = std::find(start, space, '?');
       if (question != space)
-      {
-        request_.setPath(start, question);
+      { 
+        request_.setPath(start, question);    
         request_.setQuery(question, space);
       }
       else

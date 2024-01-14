@@ -60,7 +60,6 @@ RS Connection::ReadNonBlocking() {
   while (true) {   // 使用非阻塞IO，读取客户端buffer，一次读取buf大小数据，直到全部读取完毕
   //std::cout<<"zhe li mei wen ti\n"<<std::endl;
     memset(buf, 0, sizeof(buf));
-    std::cout<<buf<<std::endl;
     ssize_t bytes_read = read(sockfd, buf, sizeof(buf));
     if (bytes_read > 0) {
       read_buf_->Append(buf, bytes_read);
@@ -75,12 +74,16 @@ RS Connection::ReadNonBlocking() {
       if(httpcontext_->parseRequest(read_buf_.get())){
           std::cout<<"ok\n";
           HttpRequest req = httpcontext_->request();
-          std::cout<<req.path();
-          /*std::map<std::string, std::string> headers = req.headers();
-          for (const auto& entry : headers) {
-            std::cout << "Key: " << entry.first << ", Value: " << entry.second << std::endl;
-          }*/
+          // std::cout<<req.path()<<std::endl;
+          // std::cout<<req.method()<<std::endl;
+          // std::cout<<req.getVersion()<<std::endl;
+          // std::map<std::string, std::string> headers = req.headers();
+          // for (const auto& entry : headers) {
+          //   std::cout << "Key: " << entry.first << ", Value: " << entry.second << std::endl;
+          // }
+          
       }
+      on_req_(this);
       break;
     } else if (bytes_read == 0) {  // EOF，客户端断开连接
       printf("read EOF, client fd %d disconnected\n", sockfd);
@@ -185,4 +188,9 @@ Buffer *Connection::send_buf() { return send_buf_.get(); }
 
 HttpContext* Connection::getContext() {
   return httpcontext_; 
+}
+
+void Connection::set_on_req(std::function<void(Connection *)> const &fn)
+{
+  on_req_ = fn;
 }

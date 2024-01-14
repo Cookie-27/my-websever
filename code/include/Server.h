@@ -17,7 +17,7 @@ class Server {
 
   void onConnect(std::function<void(Connection *)> fn);
   void onRecv(std::function<void(Connection *)> fn);
-  void onRequest(std::unique_ptr<Connection>& conn);
+  void onRequest(Connection* conn);
 
  private:
   std::unique_ptr<EventLoop> main_reactor_;

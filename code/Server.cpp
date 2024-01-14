@@ -8,6 +8,7 @@
 #include "HttpContext.h"
 #include "Buffer.h"
 #include "HttpResponse.h"
+#include "HttpRequset.h"
 #include <iostream>
 
 Server::Server(){
@@ -37,6 +38,9 @@ RS Server::NewConnection(int fd) {
   conn->set_delete_connection(cb);
   conn->set_on_recv(on_recv_);
 
+  auto req_cb = std::bind(&Server::onRequest, this,std::placeholders::_1);
+  conn->set_on_req(req_cb);
+  
   connections_[fd] = std::move(conn);
   if (on_connect_) {
     on_connect_(connections_[fd].get());
@@ -71,22 +75,37 @@ void Server::Start(){
   //LOG_INFO("start server success!");
 }
 
-void Server::onRequest(std::unique_ptr<Connection>& conn)
+void Server::onRequest(Connection *conn)
 {
   HttpContext *context = conn->getContext();
   if(context == nullptr){
     //error
   }
-  /*if(!context->parseRequest()){
+  if(!context->parseRequest(conn->read_buf())){
     //conn->Send("HTTP/1.1 400 Bad Request\r\n\r\n");
-  }*/
+  }
   if (context->gotAll())
   {
     HttpRequest req = context ->request();
     HttpResponse response(false);
+    //response.setBody();
+    //
     Buffer buf;
     response.appendToBuffer(&buf);
     conn->Send(&buf);
     context->reset();
   }
 }
+
+
+/*std::string readFromFile(const std::string& filePath) {
+    std::ifstream file(filePath);
+    if (file) {
+        // 使用流迭代器将文件内容读取到字符串
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        return buffer.str();
+    } else {
+        return "Error Reading File";
+    }
+}*/
