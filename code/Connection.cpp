@@ -6,6 +6,7 @@
 #include <cstring>
 #include "HttpContext.h"
 #include "HttpRequset.h"
+#include <iostream>
 
 Connection::Connection(int fd, EventLoop *loop) {
   socket_ = std::make_unique<Socket>();
@@ -17,11 +18,13 @@ Connection::Connection(int fd, EventLoop *loop) {
   }
   read_buf_ = std::make_unique<Buffer>();
   send_buf_ = std::make_unique<Buffer>();
-  httpcontext_ = std::make_unique<HttpContext>();
   state_ = State::Connected;
+  httpcontext_ = new HttpContext();
 }
 
-Connection::~Connection() {}
+Connection::~Connection() {
+  delete[] httpcontext_;
+}
 
 RS Connection::Read() {
   if (state_ != State::Connected) {
@@ -55,6 +58,7 @@ RS Connection::ReadNonBlocking() {
   int sockfd = socket_->fd();
   char buf[1024];  // 这个buf大小无所谓
   while (true) {   // 使用非阻塞IO，读取客户端buffer，一次读取buf大小数据，直到全部读取完毕
+  //std::cout<<"zhe li mei wen ti\n"<<std::endl;
     memset(buf, 0, sizeof(buf));
     ssize_t bytes_read = read(sockfd, buf, sizeof(buf));
     if (bytes_read > 0) {
@@ -64,8 +68,11 @@ RS Connection::ReadNonBlocking() {
       continue;
     } else if (bytes_read == -1 &&
                ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完毕
-      httpcontext_->parseRequest(read_buf_.get());  
-      
+               
+      // std::cout<<"zhe li mei wen ti\n"<<std::endl;
+      //std::cout<<read_buf_->c_str()<<std::endl;
+      //httpcontext_->parseRequest(read_buf_.get());
+
       break;
     } else if (bytes_read == 0) {  // EOF，客户端断开连接
       printf("read EOF, client fd %d disconnected\n", sockfd);
@@ -138,9 +145,9 @@ RS Connection::WriteBlocking() {
   return RS::RS_SUCCES;
 }
 
-RS Connection::Send(HttpRequest *request) {
-  //set_send_buf(msg.c_str());
-  //Write();
+RS Connection::Send(Buffer* buf) {
+  set_send_buf(buf->c_str());
+  Write();
   return RS::RS_SUCCES;
 }
 
@@ -166,3 +173,8 @@ Socket *Connection::socket() const { return socket_.get(); }
 void Connection::set_send_buf(const char *str) { send_buf_->set_buf(str); }
 Buffer *Connection::read_buf() { return read_buf_.get(); }
 Buffer *Connection::send_buf() { return send_buf_.get(); }
+
+
+HttpContext* Connection::getContext() {
+  return httpcontext_; 
+}

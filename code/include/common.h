@@ -10,7 +10,7 @@ class Buffer;
 class Connection;
 class HttpContext;
 class HttpRequest;
-
+class HttpResponse;
 
 enum RS //Run State
 {

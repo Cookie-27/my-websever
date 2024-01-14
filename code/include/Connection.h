@@ -24,16 +24,17 @@ class Connection {
   void set_send_buf(const char *str);
   Buffer *read_buf();
   Buffer *send_buf();
+  HttpContext* getContext();
 
   RS Read();
   RS Write();
-  RS Send(HttpRequest*);
+  RS Send(Buffer*);
 
   void Close();
 
   void onConnect(std::function<void()> fn);
   void onMessage(std::function<void()> fn);
-
+  
  private:
   void Business();
   RS ReadNonBlocking();
@@ -52,5 +53,5 @@ class Connection {
   std::function<void(int)> delete_connectioin_;
   std::function<void(Connection *)> on_recv_;
 
-  std::unique_ptr<HttpContext> httpcontext_;
+  HttpContext* httpcontext_;
 };

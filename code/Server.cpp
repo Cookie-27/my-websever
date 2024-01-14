@@ -5,6 +5,10 @@
 #include "EventLoop.h"
 #include <thread>
 #include "ThreadPool.h"
+#include "HttpContext.h"
+#include "Buffer.h"
+#include "HttpResponse.h"
+#include <iostream>
 
 Server::Server(){
     main_reactor_ = std::make_unique<EventLoop>();
@@ -25,7 +29,7 @@ Server::~Server(){};
 
 RS Server::NewConnection(int fd) {
   assert(fd != -1);
-  uint64_t random = fd % sub_reactors_.size();    //fen pei ce lue
+  uint64_t random = fd % sub_reactors_.size();    //allocate
 
   std::unique_ptr<Connection> conn = std::make_unique<Connection>(fd, sub_reactors_[random].get());
   std::function<void(int)> cb = std::bind(&Server::DeleteConnection, this, std::placeholders::_1);
@@ -65,4 +69,24 @@ void Server::Start(){
   }
   main_reactor_->Loop();
   //LOG_INFO("start server success!");
+}
+
+void Server::onRequest(std::unique_ptr<Connection>& conn)
+{
+  HttpContext *context = conn->getContext();
+  if(context == nullptr){
+    //error
+  }
+  /*if(!context->parseRequest()){
+    //conn->Send("HTTP/1.1 400 Bad Request\r\n\r\n");
+  }*/
+  if (context->gotAll())
+  {
+    HttpRequest req = context ->request();
+    HttpResponse response(false);
+    Buffer buf;
+    response.appendToBuffer(&buf);
+    conn->Send(&buf);
+    context->reset();
+  }
 }
