@@ -10,6 +10,8 @@
 #include "HttpResponse.h"
 #include "HttpRequset.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 Server::Server(){
     main_reactor_ = std::make_unique<EventLoop>();
@@ -88,24 +90,26 @@ void Server::onRequest(Connection *conn)
   {
     HttpRequest req = context ->request();
     HttpResponse response(false);
-    //response.setBody();
-    //
+
+    //set body
+    std::string path = req.path();
+    std::ifstream fileStream(path);
+    if (!fileStream.is_open()) {
+        //404 NOT FOUND
+    }
+    std::stringstream fileBuffer;
+    fileBuffer << fileStream.rdbuf();
+    response.setBody(fileBuffer.str());
+
+    //set first head
+    response.setStatusCode(HttpResponse::k200Ok);
+    response.setContentType("html"); //default
+    response.setCloseConnection(false);
+    response.setStatusMessage("OK");
+
     Buffer buf;
     response.appendToBuffer(&buf);
     conn->Send(&buf);
     context->reset();
   }
 }
-
-
-/*std::string readFromFile(const std::string& filePath) {
-    std::ifstream file(filePath);
-    if (file) {
-        // 使用流迭代器将文件内容读取到字符串
-        std::stringstream buffer;
-        buffer << file.rdbuf();
-        return buffer.str();
-    } else {
-        return "Error Reading File";
-    }
-}*/
