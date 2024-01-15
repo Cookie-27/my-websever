@@ -6,7 +6,7 @@ void HttpResponse::appendToBuffer(Buffer* output) const
 {
   char buf[32];
   snprintf(buf, sizeof buf, "HTTP/1.1 %d ", statusCode_);
-  output->Append(buf, strlen(buf));  // 使用 strlen 获取字符串长度
+  output->Append(buf, strlen(buf));  
 
   output->Append(statusMessage_.c_str(), statusMessage_.size());  // 使用 c_str() 和 size() 获取字符串内容和长度
   output->Append("\r\n", 2);

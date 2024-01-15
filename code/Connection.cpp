@@ -23,7 +23,7 @@ Connection::Connection(int fd, EventLoop *loop) {
 }
 
 Connection::~Connection() {
-  delete[] httpcontext_;
+  delete httpcontext_;
 }
 
 RS Connection::Read() {
@@ -69,20 +69,7 @@ RS Connection::ReadNonBlocking() {
     } else if (bytes_read == -1 &&
                ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完毕
                
-      //std::cout<<"zhe li mei wen ti\n"<<std::endl;
-      std::cout<<read_buf_->c_str()<<std::endl;
-      if(httpcontext_->parseRequest(read_buf_.get())){
-          std::cout<<"ok\n";
-          HttpRequest req = httpcontext_->request();
-          // std::cout<<req.path()<<std::endl;
-          // std::cout<<req.method()<<std::endl;
-          // std::cout<<req.getVersion()<<std::endl;
-          // std::map<std::string, std::string> headers = req.headers();
-          // for (const auto& entry : headers) {
-          //   std::cout << "Key: " << entry.first << ", Value: " << entry.second << std::endl;
-          // }
-          
-      }
+      //std::cout<<read_buf_->c_str()<<std::endl;  
       on_req_(this);
       break;
     } else if (bytes_read == 0) {  // EOF，客户端断开连接
